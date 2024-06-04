@@ -1,32 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import TextEditor from './components/TextEditor.vue'
 import EditContainer from './components/EditContainer.vue'
+import ToolsView from './views/ToolsView.vue'
 </script>
 
 <template>
-  <!-- <header> -->
-  <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div> -->
-  <!-- <TextEditor></TextEditor> -->
-  <!-- </header> -->
-
-  <!-- <RouterView /> -->
   <div class="common-layout">
     <el-container>
       <el-aside class="history-info"> 历史记录 </el-aside>
       <el-container>
         <el-header class="editor-header">
-          <text-editor></text-editor>
+          <!-- <text-editor></text-editor> -->
           <router-link to="/">
             <el-button class="editor-work-space" type="primary">工作台</el-button>
           </router-link>
@@ -38,11 +23,14 @@ import EditContainer from './components/EditContainer.vue'
         <el-divider />
         <el-container class="editor-container">
           <el-aside class="template-tools">
-            <edit-container></edit-container>
+            <ToolsView></ToolsView>
           </el-aside>
           <el-main class="editor-view">
             <router-view />
           </el-main>
+          <el-aside class="text-editor">
+            <text-editor></text-editor>
+          </el-aside>
         </el-container>
       </el-container>
     </el-container>
@@ -55,11 +43,17 @@ import EditContainer from './components/EditContainer.vue'
 .editor-view {
   height: auto;
 }
+.editor-view:hover {
+  border: 1px solid red;
+}
 .history-info {
   width: 20%;
 }
 .template-tools {
-  width: 25%;
+  width: 100px;
+}
+.text-editor {
+  widows: 200px;
 }
 .editor-work-space,
 .editor-render,

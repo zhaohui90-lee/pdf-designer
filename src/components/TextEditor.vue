@@ -102,9 +102,9 @@ const textSize = ref(12)
 
 <style lang="less" scoped>
 .text-editor {
-  width: 70%;
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 10px 0;
   .text-level {
     width: 120px;

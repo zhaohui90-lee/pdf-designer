@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>drag</title>
+  <style>
+    .draggable {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: move;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="draggable" class="draggable">drag me</div>
+
+</body>
+
+</html>
+<script>
+  const draggable = document.getElementById('draggable')
+  draggable.addEventListener('mousedown', (e) => {
+    const offsetX = e.clientX - draggable.getBoundingClientRect().left
+    const offsetY = e.clientY - draggable.getBoundingClientRect().top
+
+    function mouseMoveHandler(e) {
+      draggable.style.left = `${e.clientX - offsetX}px`
+      draggable.style.top = `${e.clientY - offsetY}px`
+    }
+
+    function mouseUpHandler() {
+      document.removeEventListener('mousemove', mouseMoveHandler)
+      document.removeEventListener('mouseup', mouseUpHandler)
+    }
+
+    document.addEventListener('mousemove', mouseMoveHandler)
+    document.addEventListener('mouseup', mouseUpHandler)
+  })
+</script>
