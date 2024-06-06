@@ -1,3 +1,3 @@
-export const vCopy = {
+export const vMove = {
   mounted: (el: any, binding: {}) => {}
 }

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .extend-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .extend-input {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .extend-input:hover {
+      border-color: red;
+    }
+
+    .extend-action {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid black;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .extend-container:hover .extend-action {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="extend-container">
+    <input type="text" class="extend-input" />
+    <div class="extend-action" onclick="addInput()">Add</div>
+    <div class="extend-action" onclick="deleteInput()">Delete</div>
+  </div>
+
+  <script>
+    function addInput() {
+      const container = document.querySelector('.extend-container');
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.className = 'extend-input';
+      container.appendChild(newInput);
+    }
+
+    function deleteInput() {
+      const container = document.querySelector('.extend-container');
+      const inputs = container.querySelectorAll('.extend-input');
+      if (inputs.length > 0) {
+        container.removeChild(inputs[inputs.length - 1]);
+      }
+    }
+
+    // Event listeners for input hover actions
+    const inputElements = document.querySelectorAll('.extend-input');
+    inputElements.forEach(input => {
+      input.addEventListener('mouseover', function () {
+        const actions = document.querySelectorAll('.extend-action');
+        actions.forEach(action => action.style.display = 'block');
+      });
+
+      input.addEventListener('mouseleave', function () {
+        const actions = document.querySelectorAll('.extend-action');
+        actions.forEach(action => action.style.display = 'none');
+      });
+    });
+  </script>
+</body>
+
+</html>

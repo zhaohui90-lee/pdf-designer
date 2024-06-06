@@ -6,6 +6,8 @@ import { computed, ref } from 'vue'
 const templateStore = useTemplateStore()
 let templates = computed(() => templateStore.templates)
 const input = ref('')
+
+// 删除和新增container
 </script>
 
 <template>
