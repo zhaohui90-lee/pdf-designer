@@ -1,20 +1,15 @@
-import { createApp, h, type VNode } from 'vue'
-import ElementPlus from 'element-plus'
-
-interface Binding {
-  arg: string
-  modifiers: object
-  value: any
-  oldValue: any
-}
+import { h, render, type VNode, type DirectiveBinding } from 'vue'
 
 export const vDrag = {
-  beforeMount(el: any, binding: Binding, vnode: VNode) {
+  beforeMount(el: any, binding: DirectiveBinding, vnode: VNode) {
     el.addEventListener('mousedown', function (event: MouseEvent) {
       const icon = el.querySelector('i')
       if (!icon) return
 
-      const cursorIcon = icon.cloneNode(true)
+      const cursorIcon = icon.cloneNode(true) as HTMLElement
+      cursorIcon.style.position = 'absolute'
+      cursorIcon.style.pointerEvents = 'none'
+      cursorIcon.style.zIndex = '1000'
 
       const moveCursorIcon = (e: MouseEvent) => {
         cursorIcon.style.left = `${e.pageX}px`
@@ -22,10 +17,9 @@ export const vDrag = {
       }
 
       const mouseMoveHandler = (e: MouseEvent) => {
-        cursorIcon.style.position = 'absolute'
-        cursorIcon.style.pointerEvents = 'none'
-        cursorIcon.style.zIndex = '1000'
-        document.body.appendChild(cursorIcon)
+        if (!document.body.contains(cursorIcon)) {
+          document.body.appendChild(cursorIcon)
+        }
         moveCursorIcon(e)
       }
 
@@ -37,8 +31,8 @@ export const vDrag = {
         document.removeEventListener('mousemove', mouseMoveHandler)
         document.removeEventListener('mouseup', mouseUpHandler)
 
-        const dropZone = document.querySelector('.editor-view .canvas-view')!
-        const rect = dropZone.getBoundingClientRect()!
+        const dropZone = document.querySelector('.editor-view .canvas-view .canvas-edit-area')!
+        const rect = dropZone.getBoundingClientRect()
 
         if (
           e.clientX > rect.left &&
@@ -46,18 +40,18 @@ export const vDrag = {
           e.clientY > rect.top &&
           e.clientY < rect.bottom
         ) {
-          // 这里渲染虚拟节点
-
+          // Render the virtual node
           const container = document.createElement('div')
-          const component = h(binding.value)
-
-          createApp({
-            render: () => component
-          })
-            .use(ElementPlus)
-            .mount(container)
-
           dropZone.appendChild(container)
+
+          try {
+            const component = h(binding.value)
+            console.log(component)
+
+            render(component, container)
+          } catch (error) {
+            console.error('Error rendering component:', error)
+          }
         }
       }
 

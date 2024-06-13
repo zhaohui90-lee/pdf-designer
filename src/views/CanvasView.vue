@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { useTemplateStore } from '../stores/templateStore'
-import FontTemplate from '../components/templates/FontTemplate.vue'
-import { computed, ref } from 'vue'
-
-const templateStore = useTemplateStore()
-let templates = computed(() => templateStore.templates)
-const input = ref('')
-
-// 删除和新增container
 </script>
 
 <template>
-  <div class="canvas-view"></div>
+  <div class="canvas-view">
+    <div class="canvas-edit-area" contenteditable="true"></div>
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -19,5 +13,8 @@ const input = ref('')
   background-color: beige;
   width: 100%;
   height: 100%;
+  .canvas-edit-area {
+    height: 100%;
+  }
 }
 </style>

@@ -1,42 +1,18 @@
 <script setup lang="ts">
-import { h, onMounted, ref } from 'vue'
+import { computed, type Ref } from 'vue'
+import { type ContainerItem } from '../../shared/type'
 import FontContainer from '../../container/FontContainer.vue'
 
-const input = ref('')
-const fontTemplateId = ref<number>()
-const fontOriginalContainer = ref<HTMLElement | null>(null)
-const clonedContainer = ref<HTMLElement | null>(null)
-
-function addTemplate(id: number) {
-  console.log('add...', id)
-  fontTemplateId.value = id
-  if (fontOriginalContainer.value && clonedContainer.value) {
-    console.log(fontOriginalContainer.value)
-  } else {
-    console.error('fontOriginalContainer or clonedContainer is not defined')
-  }
-}
-
-onMounted(() => {
-  if (!fontOriginalContainer.value) {
-    console.error('fontOriginalContainer is not defined after mount')
-  }
-  if (!clonedContainer.value) {
-    console.error('clonedContainer is not defined after mount')
-  }
+const fontItems: Ref<ContainerItem[]> = computed(() => {
+  return [{ id: Date.now(), data: '' }]
 })
 </script>
 
 <template>
   <div class="font-template">
-    <font-container
-      @add-template="addTemplate"
-      :fontTemplateId="fontTemplateId"
-      ref="fontOriginalContainer"
-    >
-      <el-input v-model="input" class="font-value" size="small"></el-input>
+    <font-container :items="fontItems">
+      <!-- <textarea name="" id="" cols="" rows="2"></textarea> -->
     </font-container>
-    <div ref="clonedContainer"></div>
   </div>
 </template>
 

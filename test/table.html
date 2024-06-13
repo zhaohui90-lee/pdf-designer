@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  #editableTable {
+    position: relative;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #editableTable th,
+  #editableTable td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  #editableTable:hover {
+    border: 2px solid red;
+  }
+
+  #addButton {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    /* transform: translate(50%, -50%); */
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .table-container:hover #addButton {
+    display: block;
+  }
+</style>
+
+<body>
+  <div class="table-container">
+    <table id="editableTable">
+      <thead class="table-head">
+        <tr>
+          <th scope="col">序号</th>
+          <th scope="col">名称</th>
+          <th scope="col">数量</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr>
+          <td scope="col">1</td>
+          <td scope="col">书籍</td>
+          <td scope="col">1</td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="addButton">+</button>
+  </div>
+  <div contenteditable="true">11111</div>
+
+</body>
+
+</html>
+<script>
+  const table = document.getElementById('editableTable')
+
+  table.addEventListener('click', function (event) {
+    const target = event.target
+
+    if (target.tagName === 'TH') {
+      const input = document.createElement('input')
+      input.type = 'text'
+      input.value = target.textContent
+      target.textContent = ''
+      target.appendChild(input)
+      input.focus()
+
+      input.addEventListener('blur', function () {
+        target.textContent = input.value
+      })
+
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          target.textContent = input.value
+        }
+      })
+    }
+  })
+  const button = document.getElementById('addButton')
+
+  button.addEventListener('click', function () {
+    const th = document.createElement('th')
+    th.scope = 'col'
+    th.textContent = '新标题'
+    const trs = document.getElementsByTagName('tr')
+    trs[0].appendChild(th)
+  })
+</script>
